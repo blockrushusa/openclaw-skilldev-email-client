@@ -6,15 +6,18 @@ export interface EmailAccountConfig {
   enabled?: boolean;
   name?: string;
 
+  // Provider shortcut (gmail, outlook, fastmail, etc.) - auto-fills IMAP/SMTP hosts
+  provider?: string;
+
   // IMAP settings
-  imapHost: string;
+  imapHost?: string; // required unless provider is set
   imapPort?: number;
   imapUser: string;
   imapPassword: string;
   imapTls?: boolean;
 
   // SMTP settings
-  smtpHost: string;
+  smtpHost?: string; // required unless provider is set
   smtpPort?: number;
   smtpUser?: string; // defaults to imapUser
   smtpPassword?: string; // defaults to imapPassword

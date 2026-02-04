@@ -8,47 +8,30 @@
     "type": "object",
     "properties": {
       "enabled": { "type": "boolean", "description": "Enable email channel" },
-      "name": { "type": "string", "description": "Account display name" },
-      "imapHost": { "type": "string", "description": "IMAP server (e.g. imap.gmail.com, imap.fastmail.com)" },
-      "imapPort": { "type": "integer", "default": 993, "description": "IMAP port (usually 993)" },
-      "imapUser": { "type": "string", "description": "Your email address (e.g. you@gmail.com)" },
+      "provider": { "type": "string", "description": "Provider shortcut: gmail, outlook, fastmail, icloud, yahoo, zoho" },
+      "imapHost": { "type": "string", "description": "IMAP server (not needed if provider is set)" },
+      "imapPort": { "type": "integer", "default": 993 },
+      "imapUser": { "type": "string", "description": "Your email address" },
       "imapPassword": { "type": "string", "description": "App password (not your regular password)" },
       "imapTls": { "type": "boolean", "default": true },
-      "smtpHost": { "type": "string", "description": "SMTP server (e.g. smtp.gmail.com, smtp.fastmail.com)" },
-      "smtpPort": { "type": "integer", "default": 587, "description": "SMTP port (usually 587)" },
-      "smtpUser": { "type": "string", "description": "SMTP user (defaults to imapUser)" },
-      "smtpPassword": { "type": "string", "description": "SMTP password (defaults to imapPassword)" },
+      "smtpHost": { "type": "string", "description": "SMTP server (not needed if provider is set)" },
+      "smtpPort": { "type": "integer", "default": 587 },
+      "smtpUser": { "type": "string" },
+      "smtpPassword": { "type": "string" },
       "smtpTls": { "type": "boolean", "default": false },
       "smtpStartTls": { "type": "boolean", "default": true },
-      "pollIntervalSeconds": { "type": "integer", "minimum": 10, "default": 60, "description": "How often to check for new emails (seconds)" },
-      "folder": { "type": "string", "default": "INBOX", "description": "Folder to monitor" },
-      "maxRepliesPerSenderPerHour": { "type": "integer", "minimum": 1, "default": 5, "description": "Rate limit per sender" },
-      "systemPrompt": { "type": "string", "description": "Custom system prompt for replies" },
-      "replyPrefix": { "type": "string", "default": "Re: " },
-      "dmPolicy": { "type": "string", "enum": ["open", "pairing", "allowlist"], "default": "pairing", "description": "Who can email: open (anyone), pairing (approve first), allowlist (only listed)" },
+      "pollIntervalSeconds": { "type": "integer", "minimum": 10, "default": 60 },
+      "folder": { "type": "string", "default": "INBOX" },
+      "maxRepliesPerSenderPerHour": { "type": "integer", "minimum": 1, "default": 5 },
       "filterMode": { "type": "string", "enum": ["open", "allowlist", "blocklist"], "default": "open" },
-      "allowFrom": { "type": "array", "items": { "type": "string" }, "description": "Allowed senders (e.g. user@example.com, *@company.com)" },
-      "blockFrom": { "type": "array", "items": { "type": "string" }, "description": "Blocked senders" },
-      "signature": { "type": "string", "description": "Email signature appended to replies" },
-      "accounts": { "type": "object", "description": "Additional email accounts (keyed by account ID)" }
+      "allowFrom": { "type": "array", "items": { "type": "string" }, "description": "Allowed senders (e.g. *@company.com)" },
+      "blockFrom": { "type": "array", "items": { "type": "string" } },
+      "signature": { "type": "string", "description": "Appended to replies" },
+      "accounts": { "type": "object", "description": "Additional accounts" }
     }
   },
   "uiHints": {
-    "imapPassword": { "label": "IMAP Password", "sensitive": true },
+    "imapPassword": { "label": "App Password", "sensitive": true },
     "smtpPassword": { "label": "SMTP Password", "sensitive": true }
-  },
-  "examples": {
-    "gmail": {
-      "imapHost": "imap.gmail.com",
-      "imapUser": "you@gmail.com",
-      "imapPassword": "your-app-password",
-      "smtpHost": "smtp.gmail.com"
-    },
-    "fastmail": {
-      "imapHost": "imap.fastmail.com",
-      "imapUser": "you@fastmail.com",
-      "imapPassword": "your-app-password",
-      "smtpHost": "smtp.fastmail.com"
-    }
   }
 }

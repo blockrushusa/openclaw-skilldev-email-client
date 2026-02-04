@@ -7,11 +7,48 @@ import type { ResolvedEmailAccount, EmailAccountConfig } from "./types.js";
 
 const DEFAULT_ACCOUNT_ID = "default";
 
+/**
+ * Provider presets - just set `provider: gmail` instead of IMAP/SMTP hosts
+ */
+const PROVIDER_PRESETS: Record<string, { imapHost: string; smtpHost: string; imapPort?: number; smtpPort?: number }> = {
+  gmail: { imapHost: "imap.gmail.com", smtpHost: "smtp.gmail.com" },
+  googlemail: { imapHost: "imap.gmail.com", smtpHost: "smtp.gmail.com" },
+  outlook: { imapHost: "outlook.office365.com", smtpHost: "smtp.office365.com" },
+  office365: { imapHost: "outlook.office365.com", smtpHost: "smtp.office365.com" },
+  hotmail: { imapHost: "outlook.office365.com", smtpHost: "smtp.office365.com" },
+  live: { imapHost: "outlook.office365.com", smtpHost: "smtp.office365.com" },
+  fastmail: { imapHost: "imap.fastmail.com", smtpHost: "smtp.fastmail.com" },
+  icloud: { imapHost: "imap.mail.me.com", smtpHost: "smtp.mail.me.com" },
+  yahoo: { imapHost: "imap.mail.yahoo.com", smtpHost: "smtp.mail.yahoo.com" },
+  aol: { imapHost: "imap.aol.com", smtpHost: "smtp.aol.com" },
+  zoho: { imapHost: "imap.zoho.com", smtpHost: "smtp.zoho.com" },
+  protonmail: { imapHost: "127.0.0.1", smtpHost: "127.0.0.1", imapPort: 1143, smtpPort: 1025 }, // requires bridge
+};
+
+/**
+ * Apply provider preset to config (fills in IMAP/SMTP hosts if missing)
+ */
+function applyProviderPreset(config: EmailAccountConfig): EmailAccountConfig {
+  if (!config.provider) return config;
+  
+  const preset = PROVIDER_PRESETS[config.provider.toLowerCase()];
+  if (!preset) return config;
+
+  return {
+    ...config,
+    imapHost: config.imapHost || preset.imapHost,
+    smtpHost: config.smtpHost || preset.smtpHost,
+    imapPort: config.imapPort || preset.imapPort,
+    smtpPort: config.smtpPort || preset.smtpPort,
+  };
+}
+
 interface EmailChannelConfig {
   enabled?: boolean;
   accounts?: Record<string, EmailAccountConfig>;
   // Top-level fields for single-account setups
   name?: string;
+  provider?: string; // gmail, outlook, fastmail, etc.
   imapHost?: string;
   imapPort?: number;
   imapUser?: string;
@@ -47,7 +84,7 @@ export function listEmailAccountIds(cfg: ClawdbotConfig): string[] {
   }
 
   // Check for top-level config (implies default account)
-  if (channelConfig.imapHost && channelConfig.imapUser) {
+  if ((channelConfig.imapHost || channelConfig.provider) && channelConfig.imapUser) {
     if (!accountIds.includes(DEFAULT_ACCOUNT_ID)) {
       accountIds.push(DEFAULT_ACCOUNT_ID);
     }
@@ -78,18 +115,19 @@ export function resolveEmailAccount(opts: {
   let accountEnabled: boolean | undefined;
 
   if (channelConfig.accounts?.[accountId]) {
-    accountConfig = channelConfig.accounts[accountId];
+    accountConfig = applyProviderPreset(channelConfig.accounts[accountId]);
     accountEnabled = accountConfig.enabled;
-  } else if (accountId === DEFAULT_ACCOUNT_ID && channelConfig.imapHost) {
+  } else if (accountId === DEFAULT_ACCOUNT_ID && (channelConfig.imapHost || channelConfig.provider)) {
     // Use top-level config as default account
-    accountConfig = {
+    accountConfig = applyProviderPreset({
       name: channelConfig.name,
+      provider: channelConfig.provider,
       imapHost: channelConfig.imapHost,
       imapPort: channelConfig.imapPort,
       imapUser: channelConfig.imapUser!,
       imapPassword: channelConfig.imapPassword!,
       imapTls: channelConfig.imapTls,
-      smtpHost: channelConfig.smtpHost!,
+      smtpHost: channelConfig.smtpHost,
       smtpPort: channelConfig.smtpPort,
       smtpUser: channelConfig.smtpUser,
       smtpPassword: channelConfig.smtpPassword,
@@ -105,7 +143,7 @@ export function resolveEmailAccount(opts: {
       allowFrom: channelConfig.allowFrom,
       blockFrom: channelConfig.blockFrom,
       signature: channelConfig.signature,
-    };
+    });
     accountEnabled = channelConfig.enabled;
   }
 

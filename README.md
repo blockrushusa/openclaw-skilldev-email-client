@@ -1,73 +1,109 @@
 # Email Plugin for Clawdbot
 
-📧 IMAP monitoring + SMTP sending with AI-powered auto-replies.
+📧 IMAP monitoring + SMTP replies with AI.
 
-## Setup
+## Quick Setup
 
+### Gmail
 ```yaml
 channels:
   email:
     enabled: true
-    imapHost: imap.gmail.com
+    provider: gmail
     imapUser: you@gmail.com
-    imapPassword: your-app-password
-    smtpHost: smtp.gmail.com
+    imapPassword: xxxx-xxxx-xxxx-xxxx  # App password, NOT your regular password
 ```
+
+### Outlook / Office365
+```yaml
+channels:
+  email:
+    enabled: true
+    provider: outlook
+    imapUser: you@outlook.com
+    imapPassword: your-app-password
+```
+
+### Fastmail
+```yaml
+channels:
+  email:
+    enabled: true
+    provider: fastmail
+    imapUser: you@fastmail.com
+    imapPassword: your-app-password
+```
+
+### Other Providers
+```yaml
+channels:
+  email:
+    enabled: true
+    imapHost: imap.example.com
+    imapUser: you@example.com
+    imapPassword: your-password
+    smtpHost: smtp.example.com
+```
+
+## Getting an App Password
+
+Most providers require an "app password" instead of your regular password.
+
+**Gmail:**
+1. Go to [Google App Passwords](https://myaccount.google.com/apppasswords)
+2. Select "Mail" and your device
+3. Copy the 16-character password (spaces don't matter)
+
+**Outlook:**
+1. Go to [Microsoft Security](https://account.microsoft.com/security)
+2. Enable 2FA if not already
+3. Create an app password
+
+**Fastmail:**
+1. Settings → Password & Security → App Passwords
+2. Create new password for "IMAP"
+
+## Supported Providers
+
+| Provider | Value |
+|----------|-------|
+| Gmail | `gmail` |
+| Outlook/Hotmail/Live | `outlook` |
+| Fastmail | `fastmail` |
+| iCloud | `icloud` |
+| Yahoo | `yahoo` |
+| Zoho | `zoho` |
+| ProtonMail | `protonmail` (requires Bridge) |
+
+## Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `provider` | — | Provider shortcut (gmail, outlook, etc.) |
+| `imapHost` | — | IMAP server (not needed if provider set) |
+| `imapUser` | — | Your email address |
+| `imapPassword` | — | App password |
+| `smtpHost` | — | SMTP server (not needed if provider set) |
+| `pollIntervalSeconds` | 60 | Check frequency |
+| `folder` | INBOX | Folder to monitor |
+| `filterMode` | open | open/allowlist/blocklist |
+| `allowFrom` | [] | Allowed senders (`*@company.com`) |
+| `blockFrom` | [] | Blocked senders |
+| `maxRepliesPerSenderPerHour` | 5 | Rate limit |
+| `signature` | — | Appended to replies |
 
 ## Sender Filtering
 
 ```yaml
 channels:
   email:
-    # "open" (default) | "allowlist" | "blocklist"
-    filterMode: open
-    
-    # Only respond to these (when filterMode: allowlist)
+    filterMode: allowlist
     allowFrom:
-      - "trusted@example.com"
-      - "*@company.com"
-    
-    # Block these (checked in all modes)
+      - "boss@company.com"
+      - "*@trustedcorp.com"
     blockFrom:
       - "spam@example.com"
 ```
-
-## All Options
-
-| Option | Default | Description |
-|--------|---------|-------------|
-| `imapHost` | — | IMAP server |
-| `imapPort` | 993 | IMAP port |
-| `imapUser` | — | Email address |
-| `imapPassword` | — | App password |
-| `smtpHost` | — | SMTP server |
-| `smtpPort` | 587 | SMTP port |
-| `pollIntervalSeconds` | 60 | Check interval |
-| `folder` | INBOX | Folder to monitor |
-| `filterMode` | open | open/allowlist/blocklist |
-| `allowFrom` | [] | Allowed senders |
-| `blockFrom` | [] | Blocked senders |
-| `maxRepliesPerSenderPerHour` | 5 | Rate limit |
-| `signature` | — | Email signature |
-
-## Features
-
-- IMAP IDLE + polling
-- SMTP outbound
-- Auto-reply detection (skips noreply@, mailer-daemon@)
-- Email threading (In-Reply-To, References)
-- Rate limiting
-- Wildcard patterns (`*@domain.com`)
-
-## Provider Notes
-
-- **Gmail**: Use [App Password](https://myaccount.google.com/apppasswords)
-- **Outlook**: `imap.office365.com` / `smtp.office365.com`
-- **Fastmail**: App password from Settings → Security
-
-## State
-
-`~/.clawdbot/email-responder/state.json`
 
 ---
 
