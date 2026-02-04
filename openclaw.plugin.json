@@ -6,6 +6,7 @@
   "channels": ["email"],
   "configSchema": {
     "type": "object",
+    "description": "To remove an account: openclaw channels remove --channel email --account <id> --delete",
     "properties": {
       "enabled": { "type": "boolean", "description": "Enable email channel" },
       "provider": { "type": "string", "description": "Provider shortcut: gmail, outlook, fastmail, icloud, yahoo, zoho" },
