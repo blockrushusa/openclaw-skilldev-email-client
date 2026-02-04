@@ -9,6 +9,7 @@ import {
   setAccountEnabledInConfigSection,
   deleteAccountFromConfigSection,
   applyAccountNameToChannelSection,
+  buildChannelConfigSchema,
   PAIRING_APPROVED_MESSAGE,
 } from "clawdbot/plugin-sdk";
 
@@ -57,7 +58,7 @@ export const emailPlugin: ChannelPlugin<ResolvedEmailAccount> = {
     }),
   },
   reload: { configPrefixes: ["channels.email"] },
-  configSchema: EmailConfigSchema,
+  configSchema: buildChannelConfigSchema(EmailConfigSchema),
   config: {
     listAccountIds: (cfg) => listEmailAccountIds(cfg as ClawdbotConfig),
     resolveAccount: (cfg, accountId) =>
