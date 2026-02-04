@@ -6,8 +6,37 @@
   "channels": ["email"],
   "configSchema": {
     "type": "object",
-    "additionalProperties": false,
-    "properties": {}
+    "properties": {
+      "enabled": { "type": "boolean" },
+      "name": { "type": "string" },
+      "imapHost": { "type": "string", "description": "IMAP server hostname" },
+      "imapPort": { "type": "integer", "default": 993 },
+      "imapUser": { "type": "string", "description": "Email address" },
+      "imapPassword": { "type": "string", "description": "App password" },
+      "imapTls": { "type": "boolean", "default": true },
+      "smtpHost": { "type": "string", "description": "SMTP server hostname" },
+      "smtpPort": { "type": "integer", "default": 587 },
+      "smtpUser": { "type": "string" },
+      "smtpPassword": { "type": "string" },
+      "smtpTls": { "type": "boolean", "default": false },
+      "smtpStartTls": { "type": "boolean", "default": true },
+      "pollIntervalSeconds": { "type": "integer", "minimum": 10, "default": 60 },
+      "folder": { "type": "string", "default": "INBOX" },
+      "maxRepliesPerSenderPerHour": { "type": "integer", "minimum": 1, "default": 5 },
+      "systemPrompt": { "type": "string" },
+      "replyPrefix": { "type": "string", "default": "Re: " },
+      "dmPolicy": { "type": "string", "enum": ["open", "pairing", "allowlist"], "default": "pairing" },
+      "filterMode": { "type": "string", "enum": ["open", "allowlist", "blocklist"], "default": "open" },
+      "allowFrom": { "type": "array", "items": { "type": "string" } },
+      "blockFrom": { "type": "array", "items": { "type": "string" } },
+      "signature": { "type": "string" },
+      "accounts": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/properties"
+        }
+      }
+    }
   },
   "uiHints": {
     "imapPassword": { "label": "IMAP Password", "sensitive": true },
