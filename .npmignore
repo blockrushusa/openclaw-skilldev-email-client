@@ -1,0 +1,4 @@
+.git
+.gitignore
+*.tgz
+node_modules
