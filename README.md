@@ -2,6 +2,32 @@
 
 📧 IMAP monitoring + SMTP replies with AI.
 
+## Install
+
+```bash
+npm install github:blockrushusa/openclaw-skilldev-email-client
+```
+
+Add to your `clawdbot.yaml`:
+```yaml
+plugins:
+  entries:
+    email:
+      enabled: true
+
+channels:
+  email:
+    enabled: true
+    provider: gmail
+    imapUser: you@gmail.com
+    imapPassword: xxxx-xxxx-xxxx-xxxx
+```
+
+Restart the gateway:
+```bash
+clawdbot gateway restart
+```
+
 ## Quick Setup
 
 ### Gmail
