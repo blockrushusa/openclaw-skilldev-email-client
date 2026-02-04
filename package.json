@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/blockrush/clawdbot-email-responder"
+    "url": "https://github.com/blockrushusa/openclaw-skilldev-email-client"
   },
   "type": "module",
   "main": "index.ts",
