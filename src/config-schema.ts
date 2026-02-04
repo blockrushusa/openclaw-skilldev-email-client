@@ -8,6 +8,9 @@ const emailAccountSchema = z.object({
   enabled: z.boolean().optional(),
   name: z.string().optional(),
 
+  // Provider shortcut (auto-fills IMAP/SMTP hosts)
+  provider: z.string().optional(), // gmail, outlook, fastmail, icloud, yahoo, zoho, protonmail
+
   // IMAP
   imapHost: z.string().optional(),
   imapPort: z.number().int().positive().optional().default(993),
