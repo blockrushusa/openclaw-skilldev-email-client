@@ -4,30 +4,19 @@
 
 ## Install
 
-**Step 1:** Install the package
 ```bash
-npm install github:blockrushusa/openclaw-skilldev-email-client
+clawdbot plugins install github:blockrushusa/openclaw-skilldev-email-client
+clawdbot gateway restart
 ```
 
-**Step 2:** Add to your `clawdbot.yaml`:
+Then configure in `clawdbot.yaml`:
 ```yaml
-plugins:
-  entries:
-    email:
-      enabled: true
-      package: "@clawdbot/email"
-
 channels:
   email:
     enabled: true
     provider: gmail
     imapUser: you@gmail.com
     imapPassword: xxxx-xxxx-xxxx-xxxx
-```
-
-**Step 3:** Restart
-```bash
-clawdbot gateway restart
 ```
 
 ## Quick Setup
