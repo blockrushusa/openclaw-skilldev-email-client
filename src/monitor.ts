@@ -3,7 +3,7 @@
  */
 
 import type { ImapFlow } from "imapflow";
-import type { ClawdbotConfig } from "clawdbot/plugin-sdk";
+import type { ClawdbotConfig } from "openclaw/plugin-sdk";
 import type { ResolvedEmailAccount, ParsedEmail } from "./types.js";
 import {
   connectImap,

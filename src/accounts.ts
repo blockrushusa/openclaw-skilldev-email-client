@@ -2,7 +2,7 @@
  * Email Account Resolution
  */
 
-import type { ClawdbotConfig } from "clawdbot/plugin-sdk";
+import type { ClawdbotConfig } from "openclaw/plugin-sdk";
 import type { ResolvedEmailAccount, EmailAccountConfig } from "./types.js";
 
 const DEFAULT_ACCOUNT_ID = "default";

@@ -2,7 +2,7 @@
  * Email Channel Plugin Implementation
  */
 
-import type { ChannelAccountSnapshot, ChannelPlugin, ClawdbotConfig } from "clawdbot/plugin-sdk";
+import type { ChannelAccountSnapshot, ChannelPlugin, ClawdbotConfig } from "openclaw/plugin-sdk";
 import {
   DEFAULT_ACCOUNT_ID,
   formatPairingApproveHint,
@@ -11,7 +11,7 @@ import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
   PAIRING_APPROVED_MESSAGE,
-} from "clawdbot/plugin-sdk";
+} from "openclaw/plugin-sdk";
 
 import {
   listEmailAccountIds,
@@ -416,7 +416,7 @@ export const emailPlugin: ChannelPlugin<ResolvedEmailAccount> = {
       let dispatchInboundMessageWithDispatcher: ((params: unknown) => Promise<unknown>) | null = null;
       try {
         // Find clawdbot installation path
-        const clawdbotPath = require.resolve("clawdbot/plugin-sdk");
+        const clawdbotPath = require.resolve("openclaw/plugin-sdk");
         const clawdbotRoot = clawdbotPath.replace(/[/\\]dist[/\\]plugin-sdk[/\\]index\.js$/, "");
         const dispatchPath = `${clawdbotRoot}/dist/auto-reply/dispatch.js`;
         ctx.log?.info(`[${account.accountId}] Loading dispatch module from: ${dispatchPath}`);

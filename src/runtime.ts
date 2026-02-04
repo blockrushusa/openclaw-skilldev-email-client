@@ -2,7 +2,7 @@
  * Runtime Bridge - Connects plugin to Clawdbot core
  */
 
-import type { ClawdbotPluginApi } from "clawdbot/plugin-sdk";
+import type { ClawdbotPluginApi } from "openclaw/plugin-sdk";
 
 let pluginRuntime: ClawdbotPluginApi["runtime"] | null = null;
 
