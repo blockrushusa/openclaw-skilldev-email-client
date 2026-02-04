@@ -22,7 +22,7 @@
       "smtpStartTls": { "type": "boolean", "default": true },
       "pollIntervalSeconds": { "type": "integer", "minimum": 10, "default": 60 },
       "folder": { "type": "string", "default": "INBOX" },
-      "maxRepliesPerSenderPerHour": { "type": "integer", "minimum": 1, "default": 5 },
+      "maxRepliesPerSenderPerHour": { "type": "integer", "minimum": 1, "default": 60 },
       "filterMode": { "type": "string", "enum": ["open", "allowlist", "blocklist"], "default": "open" },
       "allowFrom": { "type": "array", "items": { "type": "string" }, "description": "Allowed senders (e.g. *@company.com)" },
       "blockFrom": { "type": "array", "items": { "type": "string" } },

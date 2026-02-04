@@ -115,7 +115,7 @@ Most providers require an "app password" instead of your regular password.
 | `filterMode` | open | open/allowlist/blocklist |
 | `allowFrom` | [] | Allowed senders (`*@company.com`) |
 | `blockFrom` | [] | Blocked senders |
-| `maxRepliesPerSenderPerHour` | 5 | Rate limit |
+| `maxRepliesPerSenderPerHour` | 60 | Rate limit |
 | `signature` | — | Appended to replies |
 
 ## Sender Filtering

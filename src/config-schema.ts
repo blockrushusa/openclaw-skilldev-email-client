@@ -29,7 +29,7 @@ const emailAccountSchema = z.object({
   // Behavior
   pollIntervalSeconds: z.number().int().min(10).optional().default(60),
   folder: z.string().optional().default("INBOX"),
-  maxRepliesPerSenderPerHour: z.number().int().min(1).optional().default(5),
+  maxRepliesPerSenderPerHour: z.number().int().min(1).optional().default(60),
   systemPrompt: z.string().optional(),
   replyPrefix: z.string().optional().default("Re: "),
 
