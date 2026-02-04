@@ -1,15 +1,15 @@
-# Email Plugin for Clawdbot
+# Email Plugin for OpenClaw
 
 📧 IMAP monitoring + SMTP replies with AI.
 
 ## Install
 
 ```bash
-clawdbot plugins install github:blockrushusa/openclaw-skilldev-email-client
-clawdbot gateway restart
+openclaw plugins install github:blockrushusa/openclaw-skilldev-email-client
+openclaw gateway restart
 ```
 
-Then configure in `clawdbot.yaml`:
+Then configure in `openclaw.yaml`:
 ```yaml
 channels:
   email:

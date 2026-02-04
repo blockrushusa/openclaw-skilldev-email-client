@@ -11,7 +11,7 @@
   },
   "type": "module",
   "main": "index.ts",
-  "clawdbot": {
+  "openclaw": {
     "extensions": [
       "./index.ts"
     ],
