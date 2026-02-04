@@ -10,6 +10,14 @@ openclaw gateway restart
 ```
 
 Then configure in `openclaw.yaml`:
+
+## Uninstall
+
+```bash
+rm -rf ~/.openclaw/extensions/email
+```
+
+Then remove `channels.email` and `plugins.entries.email` from your `openclaw.yaml` and restart.
 ```yaml
 channels:
   email:
